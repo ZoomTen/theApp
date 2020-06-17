@@ -37,17 +37,6 @@
 int main(int argc, char* argv[]) {
     tApplication a(argc, argv);
     
-    // set share path
-    QString sharePath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    if (QDir(sharePath).exists()) {
-        a.setShareDir(sharePath); // use local share dir.
-    } else {
-        a.setShareDir("/usr/share/theApp/"); // use global system dir (LINUX)
-    }
-    
-    // setup i18n
-    a.installTranslators();
-    
     // application name
 #ifdef T_BLUEPRINT_BUILD
     a.setApplicationName("theApp-Blueprint");
@@ -79,6 +68,23 @@ int main(int argc, char* argv[]) {
     // suite name
     a.setOrganizationName("theSuite Contrib");
 
+    // set share path
+    QString sharePath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    if (QDir(sharePath).exists()) {
+        a.setShareDir(sharePath); // use local share dir.
+    } else {
+        a.setShareDir("/usr/share/theApp/"); // use global system dir (LINUX)
+    }
+    
+    // set defaults file
+    QString defaultsPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    defaultsPath += "/defaults.conf";
+    tSettings::registerDefaults(defaultsPath);   // use local config dir
+    tSettings::registerDefaults("/etc/theApp/defaults.conf"); // use global conifg dir (LINUX)
+    
+    // setup i18n
+    a.installTranslators();
+    
     // run app
     MainWindow w;
     w.show();
