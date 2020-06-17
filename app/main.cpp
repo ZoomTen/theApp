@@ -33,6 +33,9 @@
 #include <tsettings.h>
 #include <tapplication.h>
 
+// settings
+#include <tsettings.h>
+
 
 int main(int argc, char* argv[]) {
     tApplication a(argc, argv);
@@ -40,10 +43,10 @@ int main(int argc, char* argv[]) {
     // application name
 #ifdef T_BLUEPRINT_BUILD
     a.setApplicationName("theApp-Blueprint");
-    a.setDesktopFileName("com.zumid.theapp-blueprint");
+    a.setDesktopFileName("com.zumid.theApp");
 #else
     a.setApplicationName("theApp");
-    a.setDesktopFileName("com.zumid.theapp");
+    a.setDesktopFileName("com.zumid.theApp");
 #endif
     
     // version
@@ -56,7 +59,7 @@ int main(int argc, char* argv[]) {
     a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/theApp-aboutside.svg"));
     
     // generic name
-    a.setGenericName(QApplication::translate("main", "Basic application"));
+    a.setGenericName(QApplication::tr("Basic application"));
     
     // license
     a.setApplicationLicense(tApplication::Gpl3OrLater);
