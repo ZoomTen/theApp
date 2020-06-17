@@ -52,24 +52,25 @@ MainWindow::MainWindow(QWidget* parent):
     d->csd.installResizeAction(this);
     
     // CSD layout
-    /*ui->rightCsdLayout->addWidget(d->csd.csdBoxForWidget(this));
+    QWidget* csd_widget = d->csd.csdBoxForWidget(this);
+    ui->rightCsdLayout->addWidget(csd_widget);
     
     if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
         // left window controls
-        ui->topWidget->setLayoutDirection(Qt::RightToLeft);
-	ui->leftCsdLayout->setDirection(QBoxLayout::RightToLeft);
+        csd_widget->setLayoutDirection(Qt::LeftToRight);
+        ui->topWidget->setLayoutDirection(Qt::RightToLeft);;
         ui->bodyWidget->setLayoutDirection(Qt::RightToLeft);
     } else {
         // right window controls
         ui->topWidget->setLayoutDirection(Qt::LeftToRight);
         ui->bodyWidget->setLayoutDirection(Qt::LeftToRight);
-    }*/
+    }
     
-    if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
+    /*if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
         ui->leftCsdLayout->insertWidget(0,d->csd.csdBoxForWidget(this));
     } else {
         ui->rightCsdLayout->addWidget(d->csd.csdBoxForWidget(this));
-    }
+    }*/
 
     // icon menu
     QMenu* menu = new QMenu(this);
