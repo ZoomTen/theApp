@@ -41,7 +41,10 @@ FORMS += \
 
 unix {
     target.path = /usr/bin/
-
+    
+    defaults.files = defaults.conf
+    defaults.path = /etc/theApp/
+    
     desktop.path = /usr/share/applications
     desktop.files = com.zumid.theApp.desktop
 
@@ -58,4 +61,5 @@ RESOURCES += \
     resources.qrc
 
 DISTFILES += \
-    com.zumid.theApp.desktop
+    com.zumid.theApp.desktop \
+    defaults.conf
