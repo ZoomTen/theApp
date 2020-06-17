@@ -292,7 +292,5 @@
   <include location="resources.qrc"/>
  </resources>
  <connections/>
- <slots>
-  <slot>on_page1button_toggled(bool)</slot>
- </slots>
+ <slots/>
 </ui>
