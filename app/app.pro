@@ -51,7 +51,7 @@ unix {
     icon.path = /usr/share/icons/hicolor/scalable/apps/
     icon.files = icons/theApp.svg
 
-    INSTALLS += target desktop icon
+    INSTALLS += target desktop icon defaults
 }
 
 # Turn off stripping as this causes the install to fail :(
