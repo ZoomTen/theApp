@@ -1,5 +1,7 @@
 # theApp
 
+![theApp screenshot](screenshot.png)
+
 An example 3rd-party application for [Victor Tran's theSuite](https://github.com/vicr123).
 
 ## Requirements
