@@ -6,3 +6,6 @@ build/
 
 # qt creator file
 *.pro.user
+
+# autosave files
+*.autosave

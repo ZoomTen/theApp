@@ -14,8 +14,8 @@
    <string>theApp</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="theapp">
-    <normaloff>:/icons/theapp.svg</normaloff>:/icons/theapp.svg</iconset>
+   <iconset theme="theappdemo">
+    <normaloff>:/icons/theappdemo.svg</normaloff>:/icons/theappdemo.svg</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>

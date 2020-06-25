@@ -54,19 +54,6 @@ MainWindow::MainWindow(QWidget* parent):
     
     // CSD layout
     QWidget* csd_widget = d->csd.csdBoxForWidget(this);
-
-    // uncomment these if you wish to flip the layout, not recommended
-    /*ui->rightCsdLayout->addWidget(csd_widget);
-    if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
-        // left window controls
-        csd_widget->setLayoutDirection(Qt::LeftToRight);
-        ui->topWidget->setLayoutDirection(Qt::RightToLeft);;
-        ui->bodyWidget->setLayoutDirection(Qt::RightToLeft);
-    } else {
-        // right window controls
-        ui->topWidget->setLayoutDirection(Qt::LeftToRight);
-        ui->bodyWidget->setLayoutDirection(Qt::LeftToRight);
-    }*/
     
     if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
         // left window controls
@@ -79,16 +66,6 @@ MainWindow::MainWindow(QWidget* parent):
     // make menu that opens when you click the icon
     QMenu* menu = new QMenu(this);
 
-    // create File submenu
-    QMenu* fileMenu = new QMenu(this);
-    fileMenu->setTitle(tr("File"));
-    fileMenu->addAction(ui->actionNew);  // New
-    fileMenu->addAction(ui->actionOpen); // Open
-    fileMenu->addSeparator();
-    fileMenu->addAction(ui->actionSave);  // Save
-    fileMenu->addAction(ui->actionSave_As); // Save As...
-    menu->addMenu(fileMenu);                // add File submenu (non-functional)
-    
     // create Help submenu
     QMenu* helpMenu = new QMenu(this);
     helpMenu->setTitle(tr("Help"));
@@ -106,21 +83,6 @@ MainWindow::MainWindow(QWidget* parent):
 
     // attach menu to icon button
     ui->menuButton->setMenu(menu);
-    
-    // set page animation
-    ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
-    
-    // page 1 contents
-    ui->page1->setHeading(tr("Hello World!"));
-    ui->page1->setBody(tr("This is a sample custom third-party app that uses theSuite library. This page is the simplest widget here.\n\n\"Where's the menu?\" I hear you say. \"Why, click on the question mark logo at the top,\" I reply."));
-    
-    // page 2 contents
-    ui->page2->setHeading(tr("Widget Gallery"));
-    ui->page2->setBody(tr("A testing playground, for all your testing needs."));
-    
-    // apply the transition type functionality
-    connect(ui->page2, &Page2::setTransitionType,
-            this,      &MainWindow::applyTransitionSetting);
 }
 
 MainWindow::~MainWindow() {
@@ -151,41 +113,4 @@ void MainWindow::on_actionAbout_triggered() {
     // open the library-provided about dialog
     tAboutDialog d;
     d.exec();
-}
-
-// application actions
-void MainWindow::on_pageList_currentRowChanged(int currentRow)
-{
-    ui->stackedWidget->setCurrentIndex(currentRow);
-}
-
-// resize action
-void MainWindow::resizeEvent(QResizeEvent *event) {
-    // Automatically adjust sidebar size
-    if (this->width() < SC_DPI(800)) {
-        // collapse sidebar
-        ui->pageList->setMaximumSize(SC_DPI(42), QWIDGETSIZE_MAX);
-    } else {
-        // expand sidebar
-        ui->pageList->setMaximumSize(SC_DPI(180), QWIDGETSIZE_MAX);
-    }
-}
-
-/***** custom slots *****/
-
-// apply transition setting which is set from Page2::setTransitionType
-void MainWindow::applyTransitionSetting(int type){
-    switch(type){
-        case 1:
-            ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
-            break;
-        case 2:
-            ui->stackedWidget->setCurrentAnimation(tStackedWidget::SlideHorizontal);
-            break;
-        case 3:
-            ui->stackedWidget->setCurrentAnimation(tStackedWidget::Lift);
-            break;
-        default:
-            break;
-    }
 }

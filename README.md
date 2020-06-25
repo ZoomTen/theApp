@@ -4,6 +4,9 @@
 
 An example 3rd-party application for [Victor Tran's theSuite](https://github.com/vicr123).
 
+Contains a demo subproject containing some widget demos and a barebones
+subproject as a basis for apps.
+
 ## Requirements
 
 * Qt 5
@@ -14,10 +17,22 @@ An example 3rd-party application for [Victor Tran's theSuite](https://github.com
 
 `mkdir build && cd build`
 
-`qmake ../theApp.pro && make`
+`qmake .. && make`
 
-If a build is successful, the application will be in `build/app/theApp`.
+If a build is successful:
+    * Demo application will be in `build/app-demo/theapp-demo`.
+    * Barebones application will be in `build/app-barebones/theapp`.
 
 ## Packaging
 
 Currently an example [PKGBUILD](https://gist.github.com/ZoomTen/2853266b2060d563654cffa9dbcb1d49) is available for Arch Linux and derivatives.
+
+## Make it yours
+
+Clone (not fork) this repo:
+    * **GitHub**: click "Use this template"
+    * **Plain Git**: `git clone https://github.com/ZoomTen/theApp/; cd theApp; rm -r .git; git init;`
+
+Then delete the `app-demo \` line in theApp.pro and delete the `app-demo` folder.
+
+From this point on, all you do is up to your imagination! (and skill!)
