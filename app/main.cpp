@@ -53,12 +53,15 @@ int main(int argc, char* argv[]) {
     a.setApplicationVersion("0.01");
     
     // app icons
-    a.setApplicationIcon(QIcon::fromTheme("theApp", QIcon(":/icons/theApp.svg")));
-    
+    a.setApplicationIcon(
+                QIcon::fromTheme("theapp",
+                                 QIcon(":/icons/theapp.svg")
+                                 ));
+
     // splash screen graphic
-    a.setAboutDialogSplashGraphic(a.aboutDialogSplashGraphicFromSvg(":/icons/theApp-aboutside.svg"));
-    
-    // generic name
+    a.setAboutDialogSplashGraphic(
+                a.aboutDialogSplashGraphicFromSvg(
+                    ":/icons/aboutsplash.svg"));
     a.setGenericName(QApplication::tr("Basic application"));
     
     // license

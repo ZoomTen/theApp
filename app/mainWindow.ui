@@ -14,10 +14,16 @@
    <string>theApp</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="theApp" resource="resources.qrc">
-    <normaloff>:/icons/theApp.svg</normaloff>:/icons/theApp.svg</iconset>
+   <iconset theme="theapp" resource="resources.qrc">
+    <normaloff>:/icons/theapp.svg</normaloff>:/icons/theapp.svg</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
      <number>0</number>
@@ -72,8 +78,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset theme="theApp" resource="resources.qrc">
-             <normaloff>:/icons/theApp.svg</normaloff>:/icons/theApp.svg</iconset>
+            <iconset theme="theapp" resource="resources.qrc">
+             <normaloff>:/icons/theapp.svg</normaloff>:/icons/theapp.svg</iconset>
            </property>
            <property name="popupMode">
             <enum>QToolButton::InstantPopup</enum>
@@ -292,5 +298,4 @@
   <include location="resources.qrc"/>
  </resources>
  <connections/>
- <slots/>
 </ui>
