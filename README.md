@@ -36,3 +36,7 @@ Clone (not fork) this repo:
 Then delete the `app-demo \` line in theApp.pro and delete the `app-demo` folder.
 
 From this point on, all you do is up to your imagination! (and skill!)
+
+## Documentation
+
+[Wiki](https://github.com/zoomten/theapp/wiki) is coming up soon...
