@@ -20,8 +20,10 @@ subproject as a basis for apps.
 `qmake .. && make`
 
 If a build is successful:
-    * Demo application will be in `build/app-demo/theapp-demo`.
-    * Barebones application will be in `build/app-barebones/theapp`.
+
+ * Demo application will be in `build/app-demo/theapp-demo`.
+
+ * Barebones application will be in `build/app-barebones/theapp`.
 
 ## Packaging
 
@@ -30,8 +32,10 @@ Currently an example [PKGBUILD](https://gist.github.com/ZoomTen/2853266b2060d563
 ## Make it yours
 
 Clone (not fork) this repo:
-    * **GitHub**: click "Use this template"
-    * **Plain Git**: `git clone https://github.com/ZoomTen/theApp/; cd theApp; rm -r .git; git init;`
+
+ * **GitHub**: click "Use this template"
+
+ * **Plain Git**: `git clone https://github.com/ZoomTen/theApp/; cd theApp; rm -r .git; git init;`
 
 Then delete the `app-demo \` line in theApp.pro and delete the `app-demo` folder.
 
