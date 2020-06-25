@@ -20,8 +20,6 @@
  *
  * *************************************/
 
-#define APP_VERSION "0.01"
-
 // UI includes
 #include "mainwindow.h"
 
@@ -36,22 +34,28 @@
 // settings
 #include <tsettings.h>
 
+#ifndef APP_VERSION
+    // emit compiler warning if app version isn't set from the makefile or qmake
+    #warning "No version number set! Version number will be 'undefined' unless you specify it with -DAPP_VERSION=<version number>!"
+    #define APP_VERSION "undefined"
+#endif
 
 int main(int argc, char* argv[]) {
+    // start of our applicaation
     tApplication a(argc, argv);
-    
+
     // application name
-#ifdef T_BLUEPRINT_BUILD
-    a.setApplicationName("theApp-Blueprint");
-    a.setDesktopFileName("com.zumid.theApp");
-#else
-    a.setApplicationName("theApp");
-    a.setDesktopFileName("com.zumid.theApp");
-#endif
-    
+    #ifdef T_BLUEPRINT_BUILD
+        a.setApplicationName("theApp-Blueprint");
+        a.setDesktopFileName("com.zumid.theApp");
+    #else
+        a.setApplicationName("theApp");
+        a.setDesktopFileName("com.zumid.theApp");
+    #endif
+
     // version
-    a.setApplicationVersion("0.01");
-    
+    a.setApplicationVersion(APP_VERSION);
+
     // app icons
     a.setApplicationIcon(
                 QIcon::fromTheme("theapp",
@@ -62,8 +66,10 @@ int main(int argc, char* argv[]) {
     a.setAboutDialogSplashGraphic(
                 a.aboutDialogSplashGraphicFromSvg(
                     ":/icons/aboutsplash.svg"));
+
+    // theApp is a "... application" (generic name)
     a.setGenericName(QApplication::tr("Basic application"));
-    
+
     // license
     a.setApplicationLicense(tApplication::Gpl3OrLater);
 
@@ -71,26 +77,44 @@ int main(int argc, char* argv[]) {
     a.setCopyrightHolder("Zumi Daxuya");
     a.setCopyrightYear("2020");
 
+    #ifdef GIT_VERSION
+        // add git commit ID to the about page
+        a.addCopyrightLine(
+                    QApplication::tr("Git version %1").arg(GIT_VERSION)
+                    );
+    #endif
+
     // suite name
     a.setOrganizationName("theSuite Contrib");
 
-    // set share path
-    QString sharePath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    if (QDir(sharePath).exists()) {
-        a.setShareDir(sharePath); // use local share dir.
+    // set share path, this will be important for translations and such
+    QString userSharePath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QString localSharePath = QDir::cleanPath(QApplication::applicationDirPath() + "/../share/theApp/");
+    QString systemSharePath = "/usr/share/theApp"; // use global system dir (LINUX)
+
+    if (QDir(userSharePath).exists()) {
+        // if user share path exists, use that
+        a.setShareDir(userSharePath);
+    } else if (QDir(systemSharePath).exists()){
+        // if not, use the system share path
+        a.setShareDir(systemSharePath);
     } else {
-        a.setShareDir("/usr/share/theApp/"); // use global system dir (LINUX)
+        /* otherwise, use a share dir hack located one level above the
+           executable location
+        */
+        a.setShareDir(localSharePath);
     }
-    
+
     // set defaults file
-    QString defaultsPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QString defaultsPath = QStandardPaths::writableLocation(
+                QStandardPaths::AppDataLocation);
     defaultsPath += "/defaults.conf";
     tSettings::registerDefaults(defaultsPath);   // use local config dir
-    tSettings::registerDefaults("/etc/theApp/defaults.conf"); // use global conifg dir (LINUX)
-    
-    // setup i18n
+    tSettings::registerDefaults("/etc/theApp/defaults.conf"); // use global config dir (LINUX)
+
+    // setup i18n (it reads the translation files from <sharedir>/translations
     a.installTranslators();
-    
+
     // run app
     MainWindow w;
     w.show();

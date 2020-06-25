@@ -20,17 +20,27 @@
  *
  * *************************************/
 
-#include "page1.h"
-#include "ui_page1.h"
+
+// This is the simplest widget definition
+
+#include "page1.h"      // for the functions defined here
+#include "ui_page1.h"   // for Qt Designer stuff
+
+struct Page1Private{
+    // put your variables here
+    // these will be accessible thru d->variable
+};
 
 Page1::Page1(QWidget* parent) :
   QWidget(parent), ui(new Ui::Page1) {
     // set up window
     ui->setupUi(this);
+    d = new Page1Private();
 }
 
 Page1::~Page1() {
     // on destroy
+    delete d;
     delete ui;
 }
 

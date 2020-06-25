@@ -20,6 +20,8 @@
  *
  * *************************************/
 
+// A widget gallery
+
 #include "page2.h"
 #include "ui_page2.h"
 
@@ -45,22 +47,29 @@
 // system sounds
 #include <tsystemsound.h>
 
+struct Page2Private{
+    // put your variables here
+    // these will be accessible thru d->variable
+};
+
 Page2::Page2(QWidget* parent) :
   QWidget(parent), ui(new Ui::Page2) {
     // set up window
     ui->setupUi(this);
+    d = new Page2Private();
 }
 
 Page2::~Page2() {
     // on destroy
+    delete d;
     delete ui;
 }
-
 /***** actions *****/
 
 // click "popover" button
 void Page2::on_popoverButton_clicked() {
     // generate popover
+    // by instantiating a widget and then using it as the popover object
     Page2Popover* pwidget = new Page2Popover(this);
     tPopover* popover = new tPopover(pwidget);
     
@@ -72,8 +81,10 @@ void Page2::on_popoverButton_clicked() {
     connect(pwidget, &Page2Popover::done, popover, &tPopover::dismiss);
     
     // delete popover after it has been shown
-    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater); // delete popover object
-    connect(popover, &tPopover::dismissed, pwidget, &Page2Popover::deleteLater); // delete popover widget
+    // delete popover object
+    connect(popover, &tPopover::dismissed, popover, &tPopover::deleteLater);
+    // delete popover widget
+    connect(popover, &tPopover::dismissed, pwidget, &Page2Popover::deleteLater);
     
     // show popover
     // this popover only covers the currently displayed page, not the entire app
@@ -100,12 +111,14 @@ void Page2::on_toastButton_clicked() {
     // show toast
     // this toast only covers the currently displayed page, not the entire app
     toast->show(this);
+//    toast->show(this->window()); // if you want the toast to be applied to the entire app
 }
 
 
 // click "flash" button
 void Page2::on_errorFlashButton_clicked() {
     // make the clicked button flash red
+    // apparently it only works on some widget themes
     tErrorFlash::flashError(ui->errorFlashButton);
 }
 
@@ -127,14 +140,14 @@ void Page2::on_notificationButton_clicked() {
     // make the action do something in the app
     connect(notification, &tNotification::actionClicked,
             this,         [ = ](QString action){
-        
+            // do something
             if(action == "confirm"){
                 on_toastButton_clicked(); // call the toast function
             }
         }
     );
 
-    // run, and delete when done
+    // run the notification
     notification->post(true);
 }
 
@@ -159,7 +172,7 @@ void Page2::on_messageButton_clicked() {
     
     // process selection
     if (selection == tMessageBox::Ok){
-        on_toastButton_clicked(); // call the toast function
+        on_toastButton_clicked(); // call the toast function if user clicked ok
     }
     
     msg->deleteLater();
@@ -169,7 +182,7 @@ void Page2::on_messageButton_clicked() {
 // click "sound" button
 void Page2::on_soundButton_clicked() {
     // play bell sound
-    tSystemSound* sound = tSystemSound::play("bell");
+    tSystemSound::play("bell");
 }
 
 

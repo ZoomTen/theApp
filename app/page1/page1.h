@@ -25,22 +25,26 @@
 
 #include <QWidget>
 
+// Qt Designer object
 namespace Ui {
     class Page1;
 }
 
+struct Page1Private;
 class Page1 : public QWidget {
         Q_OBJECT
 
     public:
-        explicit Page1(QWidget* parent = nullptr);
-        ~Page1();
+        explicit Page1(QWidget* parent = nullptr); // called on create
+        ~Page1();                                  // called on delete
         
+        // custom functions
         void setHeading(QString text);
         void setBody(QString text);
         
     private:
-        Ui::Page1* ui;
+        Ui::Page1* ui;      // Qt Designer object
+        Page1Private* d;    // variables that we wish to use in the class
 };
 
 #endif // PAGE1_H

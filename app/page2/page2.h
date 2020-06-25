@@ -29,6 +29,7 @@ namespace Ui {
     class Page2;
 }
 
+struct Page2Private;
 class Page2 : public QWidget {
         Q_OBJECT
 
@@ -55,7 +56,8 @@ class Page2 : public QWidget {
         
     private:
         Ui::Page2* ui;
-    
+        Page2Private* d;
+
     signals:
         // this will be sent to MainWindow::applyTransitionSetting
         void setTransitionType(int type);

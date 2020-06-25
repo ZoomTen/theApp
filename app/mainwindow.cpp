@@ -47,14 +47,16 @@ MainWindow::MainWindow(QWidget* parent):
     ui->setupUi(this);
     d = new MainWindowPrivate();
     
+    // for CSD: you might want to check autoFillBackground for most widgets
     // register CSD actions
     d->csd.installMoveAction(ui->topWidget);
     d->csd.installResizeAction(this);
     
     // CSD layout
     QWidget* csd_widget = d->csd.csdBoxForWidget(this);
-    ui->rightCsdLayout->addWidget(csd_widget);
-    
+
+    // uncomment these if you wish to flip the layout, not recommended
+    /*ui->rightCsdLayout->addWidget(csd_widget);
     if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
         // left window controls
         csd_widget->setLayoutDirection(Qt::LeftToRight);
@@ -64,17 +66,20 @@ MainWindow::MainWindow(QWidget* parent):
         // right window controls
         ui->topWidget->setLayoutDirection(Qt::LeftToRight);
         ui->bodyWidget->setLayoutDirection(Qt::LeftToRight);
-    }
-    
-    /*if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
-        ui->leftCsdLayout->insertWidget(0,d->csd.csdBoxForWidget(this));
-    } else {
-        ui->rightCsdLayout->addWidget(d->csd.csdBoxForWidget(this));
     }*/
+    
+    if (tCsdGlobal::windowControlsEdge() == tCsdGlobal::Left) {
+        // left window controls
+        ui->leftCsdLayout->insertWidget(0,csd_widget);
+    } else {
+        // right window controls
+        ui->rightCsdLayout->addWidget(csd_widget);
+    }
 
-    // icon menu
+    // make menu that opens when you click the icon
     QMenu* menu = new QMenu(this);
 
+    // create File submenu
     QMenu* fileMenu = new QMenu(this);
     fileMenu->setTitle(tr("File"));
     fileMenu->addAction(ui->actionNew);  // New
@@ -84,6 +89,7 @@ MainWindow::MainWindow(QWidget* parent):
     fileMenu->addAction(ui->actionSave_As); // Save As...
     menu->addMenu(fileMenu);                // add File submenu (non-functional)
     
+    // create Help submenu
     QMenu* helpMenu = new QMenu(this);
     helpMenu->setTitle(tr("Help"));
     helpMenu->addAction(ui->actionFileBug); // File a bug
@@ -94,11 +100,14 @@ MainWindow::MainWindow(QWidget* parent):
     
     menu->addAction(ui->actionExit);        // Exit item
 
+    // fix icon size
     ui->menuButton->setIconSize(SC_DPI_T(QSize(24, 24), QSize));
     ui->menuButton->setFixedSize(SC_DPI(42), QWIDGETSIZE_MAX);
+
+    // attach menu to icon button
     ui->menuButton->setMenu(menu);
     
-    // page animation
+    // set page animation
     ui->stackedWidget->setCurrentAnimation(tStackedWidget::Fade);
     
     // page 1 contents
@@ -110,7 +119,8 @@ MainWindow::MainWindow(QWidget* parent):
     ui->page2->setBody(tr("A testing playground, for all your testing needs."));
     
     // apply the transition type functionality
-    connect(ui->page2, &Page2::setTransitionType, this, &MainWindow::applyTransitionSetting);
+    connect(ui->page2, &Page2::setTransitionType,
+            this,      &MainWindow::applyTransitionSetting);
 }
 
 MainWindow::~MainWindow() {
